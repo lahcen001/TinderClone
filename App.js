@@ -15,7 +15,7 @@ export default function App() {
     try {
       const { data } = await axios.get('https://randomuser.me/api/?gender=male&results=10')
       setUsers(data.results)
-      console.log(data.results)
+
     } catch (error) {
       console.log(error)
       Alert.alert('Error getting usres', '', [{ text: 'Retry', onPress: () => fetchUsers() }])
@@ -25,13 +25,28 @@ export default function App() {
     fetchUsers()
   }, [])
 
+  function handleLike() {
+    console.log("like")
+    nextUser()
+  }
+  function handlePass() {
+    console.log("pass")
+    nextUser()
+  }
+
+  function nextUser() {
+    const nextIndex = users.length - 2 == currentIndex ? 0 : currentIndex + 1
+    setCurrentIndex(nextIndex)
+  }
+
   return (
     <View style={styles.container}>
       <TopBar />
       <View style={styles.swipes}>
-        {users.length > 1 && (
-          <Swipes currentIndex={currentIndex} users={users} />
-        )
+        {users.length > 1 &&
+          users.map((u, i) => currentIndex == i &&
+            <Swipes key={i} currentIndex={currentIndex} users={users} handleLike={handleLike} handlePass={handlePass} />
+          )
 
         }
       </View>

@@ -1,20 +1,22 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-export default function BottomBar() {
+
+export default function BottomBar({ handleLikePress, handlePassPress }) {
     return (
         <View style={styles.container}>
-            <View>
-                <TouchableOpacity style={styles.button}>
-                    <FontAwesome name="times" size={27} color="#F06795"></FontAwesome>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
-                    <FontAwesome name="heart" size={27} color="#64EDCC"></FontAwesome>
-                </TouchableOpacity>
-            </View>
+            <View />
+            <TouchableOpacity style={styles.button} onPress={handlePassPress}>
+                <FontAwesome name="times" size={27} color="#F06795"></FontAwesome>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+                <FontAwesome name="heart" size={27} color="#64EDCC" onPress={handleLikePress}></FontAwesome>
+            </TouchableOpacity>
+            <View />
         </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         height: 75,
@@ -34,9 +36,8 @@ const styles = StyleSheet.create({
             width: 0,
             height: 0,
         },
-        shadowOpacity: 0.12,
+        shadowOpacity: 0.15,
         shadowRadius: 6.46,
         elevation: 9,
-
-    }
+    },
 })

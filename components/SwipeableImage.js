@@ -2,8 +2,8 @@ import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'
 
-export default function SwipeableImage({ user }) {
-    console.log(user.picture.large)
+export default function SwipeableImage({ user, willLike, willPass }) {
+
     return (
 
         <View>

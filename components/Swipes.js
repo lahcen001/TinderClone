@@ -1,23 +1,26 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { RectButton } from 'react-native-gesture-handler';
-import SwipeableImage from './SwipeableImage';
+import React, { useState } from 'react'
+import { StyleSheet } from 'react-native'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { RectButton } from 'react-native-gesture-handler'
+import SwipeableImage from './SwipeableImage'
 
-export default function Swipes({ users, currentIndex, handleLike, swipesRef, handlePass }) {
-    const [willLike, setwillLike] = useState(false)
-    const [willPass, setwillPass] = useState(false)
+function Swipes({ users, currentIndex, handleLike, handlePass, swipesRef }) {
+    const [willLike, setWillLike] = useState(false)
+    const [willPass, setWillPass] = useState(false)
     const renderLeftActions = () => {
-        return (<RectButton style={styles.container}>
-            <SwipeableImage user={users[currentIndex + 1]} ></SwipeableImage>
-        </RectButton>)
+        return (
+            <RectButton style={styles.container}>
+                <SwipeableImage user={users[currentIndex + 1]}></SwipeableImage>
+            </RectButton>
+        )
     }
     const renderRightActions = () => {
-        return (<RectButton style={styles.container}>
-            <SwipeableImage user={users[currentIndex + 1]} ></SwipeableImage>
-        </RectButton>)
+        return (
+            <RectButton style={styles.container}>
+                <SwipeableImage user={users[currentIndex + 1]}></SwipeableImage>
+            </RectButton>
+        )
     }
-
 
     return (
         <Swipeable
@@ -28,22 +31,25 @@ export default function Swipes({ users, currentIndex, handleLike, swipesRef, han
             renderLeftActions={renderLeftActions}
             renderRightActions={renderRightActions}
             onSwipeableLeftOpen={() => {
-                setwillLike(false)
+                setWillLike(false)
                 handleLike()
             }}
             onSwipeableRightOpen={() => {
-                setwillPass(false)
+                setWillPass(false)
                 handlePass()
             }}
-
-
+            onSwipeableLeftWillOpen={() => setWillLike(true)}
+            onSwipeableRightWillOpen={() => setWillPass(true)}
         >
             <SwipeableImage user={users[currentIndex]} willLike={willLike} willPass={willPass} />
-        </Swipeable >
+        </Swipeable>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    }
+    },
 })
+
+export default React.forwardRef((props, ref) => <Swipes swipesRef={ref} {...props}></Swipes>)
